@@ -1,8 +1,19 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./Header";
-import Head from "next/head";
-
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { Roboto } from 'next/font/google';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../app/theme';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import SideMenu from '../app/SideMenu'
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-roboto',
+});
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -21,8 +32,32 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+       {/* <meta charset="utf-8" /> */}
+    <title>Dashboard Template - Material UI</title>
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com"  />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    </head>
+       <body className={roboto.variable}>
+      <AppRouterCacheProvider  options={{ enableCssLayer: true }}>
+      <ThemeProvider theme={theme}>
+      <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
         <Header />
+        <SideMenu />
+        </Box>
+        </ThemeProvider>
+      </AppRouterCacheProvider>
+
         {children}
       </body>
     </html>
